@@ -13,12 +13,23 @@ h1 {
   padding: 0.5em;
 }
 
+div.display {
+  border: 2px solid black;
+  width: 300px;
+  height: 100px;
+  margin: 0 auto;
+}
+
 div.numbers-container {
   display: flex;
+  justify-content: center;
+  padding: 12px;
   margin: 0 auto;
   gap: 12px;
   flex-wrap: wrap;
   width: 300px;
+  border: 2px solid red;
+  margin-top: 12px;
 }
 
 div.numbers-container button {
