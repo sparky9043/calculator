@@ -42,3 +42,7 @@ div.numbers-container button {
   border-radius: 6px;
   flex: 80px;
 }
+
+div.numbers-container button#equals {
+  flex: 4 1 80px;
+}
