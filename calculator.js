@@ -1,7 +1,7 @@
 const numbersContainer = document.querySelector('.numbers-container');
+const display = document.querySelector('.display');
 
 numbersContainer.addEventListener('click', function(e) {
-  const display = document.querySelector('.display');
   switch (e.target.id) {
     case "1":
       console.log('1 clicked');
@@ -46,13 +46,67 @@ numbersContainer.addEventListener('click', function(e) {
     case "add":
       display.textContent += '+';
       break;
+    case "subtract":
+      display.textContent += '-';
+      break;
+    case "multiply":
+      display.textContent += '*';
+      break;
+    case "divide":
+      display.textContent += '/';
+      break;
+    case "clear":
+      display.textContent = '';
+      break;
     case "equals":
-      let numbers = display.textContent.split(/[.\*+-/_]/);
-      display.textContent = add(numbers[0], numbers[1]);
+      if (
+        display.textContent.includes("+") ||
+        display.textContent.includes("-") ||
+        display.textContent.includes("*") ||
+        display.textContent.includes("/")
+      ) update();
       break;
   }
 });
 
+
+function update() {
+  if (display.textContent.includes("+")) {
+    let numbers = display.textContent.split('+');
+    display.textContent = add(numbers[0], numbers[1]);
+  } else if (display.textContent.includes("-")) {
+    let numbers = display.textContent.split('-');
+    display.textContent = subtract(numbers[0], numbers[1]);
+  } else if (display.textContent.includes("*")) {
+    let numbers = display.textContent.split('*');
+    display.textContent = multiply(numbers[0], numbers[1]);
+  } else if (display.textContent.includes("/")) {
+    let numbers = display.textContent.split('/');
+    display.textContent = divide(numbers[0], numbers[1]);
+  }
+}
+
+
 function add(first, second) {
-  return +first + +second;
+  if (!parseInt(first)) first = 0;
+  if (!parseInt(second)) second = first;
+  return parseFloat(first) + parseFloat(second);
+}
+
+function subtract(first, second) {
+  if (!parseInt(first)) first = 0;
+  if (!parseInt(second)) second = first;
+  return parseFloat(first) - parseFloat(second);
+}
+
+function multiply(first, second) {
+  if (!parseInt(first)) first = 0;
+  if (!parseInt(second)) second = first;
+  return parseFloat(first) * parseFloat(second);
+}
+
+function divide(first, second) {
+  if (!parseInt(first)) first = 0;
+  if (!parseInt(second)) second = first;
+  return Math.round( (parseInt(first) / parseInt(second)) * 10000000 ) / 10000000;
 }
