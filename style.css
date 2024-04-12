@@ -30,7 +30,7 @@ div.numbers-container {
   margin: 0 auto;
   gap: 12px;
   flex-wrap: wrap;
-  width: 300px;
+  width: 400px;
   border: 2px solid red;
   margin-top: 12px;
 }
@@ -40,4 +40,5 @@ div.numbers-container button {
   width: 80px;
   height: 80px;
   border-radius: 6px;
+  flex: 80px;
 }
