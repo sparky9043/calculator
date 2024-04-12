@@ -1,7 +1,9 @@
 const numbersContainer = document.querySelector('.numbers-container');
 const display = document.querySelector('.display');
+let isOperatorOn = false;
 
 numbersContainer.addEventListener('click', function(e) {
+  const pseudo = [];
   switch (e.target.id) {
     case "1":
       console.log('1 clicked');
@@ -44,15 +46,40 @@ numbersContainer.addEventListener('click', function(e) {
       display.textContent += 0;
       break;
     case "add":
+      isOperatorOn = true;
+      if (
+        display.textContent.includes("+") ||
+        display.textContent.includes("-") ||
+        display.textContent.includes("*") ||
+        display.textContent.includes("/")
+      ) update();
       display.textContent += '+';
       break;
     case "subtract":
+      if (
+        display.textContent.includes("+") ||
+        display.textContent.includes("-") ||
+        display.textContent.includes("*") ||
+        display.textContent.includes("/")
+      ) update();
       display.textContent += '-';
       break;
     case "multiply":
+      if (
+        display.textContent.includes("+") ||
+        display.textContent.includes("-") ||
+        display.textContent.includes("*") ||
+        display.textContent.includes("/")
+      ) update();
       display.textContent += '*';
       break;
     case "divide":
+      if (
+        display.textContent.includes("+") ||
+        display.textContent.includes("-") ||
+        display.textContent.includes("*") ||
+        display.textContent.includes("/")
+      ) update();
       display.textContent += '/';
       break;
     case "clear":
