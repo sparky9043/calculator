@@ -15,10 +15,11 @@ h1 {
 
 div.display {
   border: 2px solid black;
-  width: 300px;
+  width: 400px;
   height: 100px;
   margin: 0 auto;
-  font-size: 24px;
+  font-size: 48px;
+  overflow: hidden;
   text-align: right;
   padding: 8px;
 }
@@ -30,9 +31,8 @@ div.numbers-container {
   margin: 0 auto;
   gap: 12px;
   flex-wrap: wrap;
-  width: 400px;
   border: 2px solid red;
-  margin-top: 12px;
+  width: 400px;
 }
 
 div.numbers-container button {
@@ -40,9 +40,8 @@ div.numbers-container button {
   width: 80px;
   height: 80px;
   border-radius: 6px;
-  flex: 80px;
 }
 
-div.numbers-container button#equals {
-  flex: 4 1 80px;
+div button:last-child {
+  background-color: darkgrey;
 }

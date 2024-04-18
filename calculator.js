@@ -1,139 +1,117 @@
-const numbersContainer = document.querySelector('.numbers-container');
+const buttons = document.querySelectorAll('button');
 const display = document.querySelector('.display');
-let isOperatorOn = false;
+let firstNumber = '';
+let secondNumber = '';
+let operator = '';
+let number = '';
+let result = '';
+let isEqualOn = false;
 
-numbersContainer.addEventListener('click', function(e) {
-  const pseudo = [];
-  switch (e.target.id) {
-    case "1":
-      console.log('1 clicked');
-      display.textContent += 1;
-      break;
-    case "2":
-      console.log('2 clicked');
-      display.textContent += 2;
-      break;
-    case "3":
-      console.log('3 clicked');
-      display.textContent += 3;
-      break;
-    case "4":
-      console.log('4 clicked');
-      display.textContent += 4;
-      break;
-    case "5":
-      console.log('5 clicked');
-      display.textContent += 5;
-      break;
-    case "6":
-      console.log('6 clicked');
-      display.textContent += 6;
-      break;
-    case "7":
-      console.log('7 clicked');
-      display.textContent += 7;
-      break;
-    case "8":
-      console.log('8 clicked');
-      display.textContent += 8;
-      break;
-    case "9":
-      console.log('9 clicked');
-      display.textContent += 9;
-      break;
-    case "0":
-      console.log('0 clicked');
-      display.textContent += 0;
-      break;
-    case "add":
-      isOperatorOn = true;
-      if (
-        display.textContent.includes("+") ||
-        display.textContent.includes("-") ||
-        display.textContent.includes("*") ||
-        display.textContent.includes("/")
-      ) update();
-      display.textContent += '+';
-      break;
-    case "subtract":
-      if (
-        display.textContent.includes("+") ||
-        display.textContent.includes("-") ||
-        display.textContent.includes("*") ||
-        display.textContent.includes("/")
-      ) update();
-      display.textContent += '-';
-      break;
-    case "multiply":
-      if (
-        display.textContent.includes("+") ||
-        display.textContent.includes("-") ||
-        display.textContent.includes("*") ||
-        display.textContent.includes("/")
-      ) update();
-      display.textContent += '*';
-      break;
-    case "divide":
-      if (
-        display.textContent.includes("+") ||
-        display.textContent.includes("-") ||
-        display.textContent.includes("*") ||
-        display.textContent.includes("/")
-      ) update();
-      display.textContent += '/';
-      break;
-    case "clear":
-      display.textContent = '';
-      break;
-    case "equals":
-      if (
-        display.textContent.includes("+") ||
-        display.textContent.includes("-") ||
-        display.textContent.includes("*") ||
-        display.textContent.includes("/")
-      ) update();
-      break;
-  }
+display.textContent = '0';
+
+
+
+buttons.forEach((button) => {
+  button.addEventListener('click', function(e) {
+    if (this.classList.contains('operand')) {
+      const currentNumber = this.value;
+      if (!operator) updateDisplay(findFirstNumber(currentNumber));
+      if (operator) updateDisplay(findSecondNumber(currentNumber));
+    }
+    if (this.classList.contains('operator')) {
+      if (!firstNumber) firstNumber = display.textContent;
+      if (!secondNumber) secondNumber = display.textContent;
+      isEqualOn = false;
+      if (firstNumber && secondNumber && operator) {
+        updateDisplay(operate(firstNumber, secondNumber, operator));
+        clearNumbers();
+        firstNumber = display.textContent;
+      }
+      const currentOperator = this.value;
+      updateOperator(currentOperator);
+    }
+    if (this.id === 'equals') {
+      if (!secondNumber) secondNumber = display.textContent;
+      if (!isEqualOn) {
+        updateDisplay(operate(firstNumber, secondNumber, operator));
+        clearNumbers();
+        firstNumber = display.textContent;      
+      }
+      isEqualOn = true;
+    }
+    if (this.id === 'clear') {
+      clearNumbers();
+      display.textContent = '0';
+    }
+  });
 });
 
+function clearNumbers() {
+  firstNumber = '';
+  secondNumber = '';
+  number = '';
+  operator = '';
+  result = '';
+}
 
-function update() {
-  if (display.textContent.includes("+")) {
-    let numbers = display.textContent.split('+');
-    display.textContent = add(numbers[0], numbers[1]);
-  } else if (display.textContent.includes("-")) {
-    let numbers = display.textContent.split('-');
-    display.textContent = subtract(numbers[0], numbers[1]);
-  } else if (display.textContent.includes("*")) {
-    let numbers = display.textContent.split('*');
-    display.textContent = multiply(numbers[0], numbers[1]);
-  } else if (display.textContent.includes("/")) {
-    let numbers = display.textContent.split('/');
-    display.textContent = divide(numbers[0], numbers[1]);
+function findFirstNumber(input) {
+  number += input;
+  firstNumber = number;
+  return number;
+}
+
+function findSecondNumber(input) {
+  number += input;
+  secondNumber = number;
+  return number;
+}
+
+function updateDisplay(input) {
+ display.textContent = input; 
+}
+
+function updateOperator(input) {
+  number = '';
+  operator = input;
+  return operator;
+}
+
+function operate(first, second, operator) {
+  switch (operator) {
+    case "+":
+      return add(first, second);
+      break;
+    case "-":
+      return subtract(first, second);
+      break;
+    case "*":
+      return multiply(first, second);
+      break;
+    case "/":
+      if (divide(first, second) === Infinity) {
+        clearNumbers();
+        return "lol, press clear and try again";
+      }
+      return divide(first, second);
+      break;
   }
 }
 
-
+// operator functions
 function add(first, second) {
-  if (!parseInt(first)) first = 0;
-  if (!parseInt(second)) second = first;
-  return parseFloat(first) + parseFloat(second);
+  return Math.round((parseFloat(first) + parseFloat(second)) * 10000000000) / 10000000000;
 }
 
 function subtract(first, second) {
-  if (!parseInt(first)) first = 0;
-  if (!parseInt(second)) second = first;
-  return parseFloat(first) - parseFloat(second);
+  return Math.round((parseFloat(first) - parseFloat(second)) * 10000000000) / 10000000000;
 }
 
 function multiply(first, second) {
-  if (!parseInt(first)) first = 0;
-  if (!parseInt(second)) second = first;
-  return parseFloat(first) * parseFloat(second);
+  return Math.round((parseFloat(first) * parseFloat(second)) * 10000000000) / 10000000000;
 }
 
 function divide(first, second) {
-  if (!parseInt(first)) first = 0;
-  if (!parseInt(second)) second = first;
-  return Math.round( (parseInt(first) / parseInt(second)) * 10000000 ) / 10000000;
+  return Math.round((parseFloat(first) / parseFloat(second)) * 10000000000) / 10000000000;
 }
+
+// OMG IT'S WORKING!!!!
