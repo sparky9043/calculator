@@ -3,16 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculator | The Odin Project</title>
+  <title>Document</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>Calculator</h1>
   <div class="display"></div>  
   <div class="numbers-container">
-    <button id="clear">AC</button>
-    <button id="sign">+/-</button>
-    <button id="percent">%</button>
     <button class="operator" id="divide" value="/">/</button>
     <button class="operand" data-key="7" value="7">7</button>
     <button class="operand" data-key="8" value="8">8</button>
@@ -28,9 +25,9 @@
     <button class="operator" id="add" value="+">+</button>
     <button class="operand" data-key="0" value="0">0</button>
     <button class="operand" data-key="." value=".">.</button>
-    <button id="equals">=</button>
-    <button disabled></button>
+    <button id="equals" value="=" data-key="Enter">=</button>
+    <button id="clear" value="Escape">AC</button>
   </div>
-  <script src="calculator.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
