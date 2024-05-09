@@ -9,57 +9,25 @@ let isEqualOn = false;
 
 display.textContent = '0';
 
-buttons.forEach(button => button.addEventListener('click', startCalculator));
-window.addEventListener('keydown', startCalculatorKeyboard);
+buttons.forEach(button => button.addEventListener('click', function(e) {
+  startCalculator(e.target);
+}));
 
-function startCalculatorKeyboard(e) {
+window.addEventListener('keydown', function(e) {
   const key = document.querySelector(`.numbers-container button[value="${e.key}"]`) ||
-              document.querySelector(`.numbers-container button[data-key="${e.key}"]`) ||
-              '';
+        document.querySelector(`.numbers-container button[data-key="${e.key}"]`) ||
+        '';
   if (!key) return;
-  if (!key) return;
-  if (key.classList.contains('operand')) {
-    const currentNumber = key.value;
-    if (!operator) updateDisplay(findFirstNumber(currentNumber));
-    if (operator) updateDisplay(findSecondNumber(currentNumber));
-  }
-  if (key.classList.contains('operator')) {
-    if (!firstNumber) firstNumber = display.textContent;
-    if (!secondNumber) secondNumber = display.textContent;
-    isEqualOn = false;
-    if (firstNumber && secondNumber && operator) {
-      updateDisplay(operate(firstNumber, secondNumber, operator));
-      clearNumbers();
-      firstNumber = display.textContent;
-    }
-    const currentOperator = key.value;
-    updateOperator(currentOperator);
-  }
-  if (key.id === 'equals') {
-    if (!secondNumber) secondNumber = display.textContent;
-    if (!isEqualOn) {
-      updateDisplay(operate(firstNumber, secondNumber, operator));
-      clearNumbers();
-      firstNumber = display.textContent;      
-    }
-    isEqualOn = true;
-  }
-  if (key.id === 'clear') {
-    clearNumbers();
-    display.textContent = '0';
-  }
-}
+  startCalculator(key);
+});
 
-
-
-
-function startCalculator(e) {
-    if (this.classList.contains('operand')) {
-      const currentNumber = this.value;
+function startCalculator(target) {
+    if (target.classList.contains('operand')) {
+      const currentNumber = target.value;
       if (!operator) updateDisplay(findFirstNumber(currentNumber));
       if (operator) updateDisplay(findSecondNumber(currentNumber));
     }
-    if (this.classList.contains('operator')) {
+    if (target.classList.contains('operator')) {
       if (!firstNumber) firstNumber = display.textContent;
       if (!secondNumber) secondNumber = display.textContent;
       isEqualOn = false;
@@ -68,10 +36,10 @@ function startCalculator(e) {
         clearNumbers();
         firstNumber = display.textContent;
       }
-      const currentOperator = this.value;
+      const currentOperator = target.value;
       updateOperator(currentOperator);
     }
-    if (this.id === 'equals') {
+    if (target.id === 'equals') {
       if (!secondNumber) secondNumber = display.textContent;
       if (!isEqualOn) {
         updateDisplay(operate(firstNumber, secondNumber, operator));
@@ -80,7 +48,7 @@ function startCalculator(e) {
       }
       isEqualOn = true;
     }
-    if (this.id === 'clear') {
+    if (target.id === 'clear') {
       clearNumbers();
       display.textContent = '0';
     }
